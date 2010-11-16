@@ -87,7 +87,7 @@ class IssuesController < ApplicationController
         format.xml  { render :layout => false }
         format.json { render :text => @issues.to_json, :layout => false }
         format.atom { render_feed(@issues, :title => "#{@project || Setting.app_title}: #{l(:label_issue_plural)}") }
-        format.csv  { send_data(issues_to_csv(@issues, @project), :type => 'text/csv; header=present', :filename => 'export.csv') }
+        format.csv  { send_data(issues_to_csv(@issues, @project, @query), :type => 'text/csv; header=present', :filename => 'export.csv') }
         format.pdf  { send_data(issues_to_pdf(@issues, @project, @query), :type => 'application/pdf', :filename => 'export.pdf') }
       end
     else
