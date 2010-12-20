@@ -45,6 +45,7 @@ module IssuesHelper
     @cached_label_assigned_to ||= l(:field_assigned_to)
     @cached_label_priority ||= l(:field_priority)
     @cached_label_project ||= l(:field_project)
+    @cached_label_estimated_hours ||= l(:field_estimated_hours)
 
     link_to_issue(issue) + "<br /><br />" +
       "<strong>#{@cached_label_project}</strong>: #{link_to_project(issue.project)}<br />" +
@@ -52,7 +53,17 @@ module IssuesHelper
       "<strong>#{@cached_label_start_date}</strong>: #{format_date(issue.start_date)}<br />" +
       "<strong>#{@cached_label_due_date}</strong>: #{format_date(issue.due_date)}<br />" +
       "<strong>#{@cached_label_assigned_to}</strong>: #{issue.assigned_to}<br />" +
-      "<strong>#{@cached_label_priority}</strong>: #{issue.priority.name}"
+      "<strong>#{@cached_label_priority}</strong>: #{issue.priority.name}<br />" +
+      "<strong>#{@cached_label_estimated_hours}</strong>: #{issue.estimated_hours}"
+      
+  end
+
+  def bg_color_style(issue)
+    if issue.closed?
+      'style="background-color: #99FF99 !important"' # closed
+    elsif issue.overdue?
+      'style="background-color: #FF6600 !important"' # overdue
+    end
   end
     
   def render_issue_subject_with_tree(issue)
